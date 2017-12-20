@@ -25,6 +25,8 @@ Vagrant.configure("2") do |config|
   # NOTE: This will enable public access to the opened port
   # config.vm.network "forwarded_port", guest: 80, host: 8080
 
+config.vm.network "forwarded_port", guest: 80, host: 8080
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
@@ -69,4 +71,14 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+
+config.vm.provision "ansible" do |ansible|
+	ansible.verbose = "v"
+	ansible.playbook = "setup.yml"
+	ansible.inventory_path = "vagrant-investory"
+	ansible.host_key_checking = "false"
+	ansible.limit = "all"
+end
+
+## end of Vagrantfile
 end
